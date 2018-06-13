@@ -3,6 +3,7 @@
 ## To run the server:
 
 1. Clone repository
+2. cd into directory
 2. npm install
 3. npm start
 
