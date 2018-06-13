@@ -1,22 +1,22 @@
 # Instructions
 
-## To run the server;
+## To run the server:
 
 1. Clone repository
 2. npm install
 3. npm start
 
 ## To use the client files:
-1. cd client\_files
+### 1. cd client\_files
 
-2. To register a user:
+### 2. To register a user:
 ```
   node register.js {user} {password}
 ```
   user - the user you want to register with
   password - the password you want the user to register with
 
-3. To add a public key:
+### 3. To add a public key:
 ```
   node add_key.js {user} {password} {publicKeyFilePath}
 ```
@@ -24,7 +24,7 @@
   password - password for the user
   publicKeyFilePath - relative file path for the public key pem file. Example: './publicKey.pem'
 
-4. Generate a signature for your message(for testing convenience purposes, does not call the server)
+### 4. Generate a signature for your message(for testing convenience purposes, does not call the server)
 ```
   node signature_generator.js {privateKeyPemFilePath} {message}
 ```
@@ -33,7 +33,7 @@
 
   Output for this will be a sha512 hash encrypted with the private key in hex format.
 
-5. To verify a message
+### 5. To verify a message
 ```
   node verify_message.js user message signature
 ```
