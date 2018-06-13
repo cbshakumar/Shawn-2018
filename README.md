@@ -42,4 +42,5 @@
   message - message to be verified
   signature - sha512 message hash encrypted with private key. The signature should be in hex format.
 
+Notes: Server is not using https. In a production environment, the server would talk to a load balancer which would handle incoming https traffic.
 
