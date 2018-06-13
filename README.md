@@ -35,7 +35,7 @@
 
 #### 5. To verify a message
 ```
-  node verify_message.js user message signature
+  node verify_message.js {user} {message} {signature}
 ```
 
   user - the user you want to ensure sent your message
