@@ -13,7 +13,7 @@ const controllerFactory = container.getControllerFactory();
 router.use(bodyParser.urlencoded({ extended: false }));
 router.use(bodyParser.json());
 
-router.post('/register', async (req, res, next) => {
+router.post('/register', (req, res, next) => {
   safeExecute(async () => {
     let registerController = controllerFactory.getRegisterController();
     await registerController.registerUser(req, res);
@@ -21,6 +21,17 @@ router.post('/register', async (req, res, next) => {
 });
 
 router.post('/keys', (req, res, next) => {
+  safeExecute(async () => {
+    let userKeysController = controllerFactory.getUserKeysController();
+    await userKeysController.saveKey(req, res);
+  }, next);
+});
+
+router.post('/verify', (req, res, next) => {
+  safeExecute(async () => {
+    let userKeysController = controllerFactory.getUserKeysController();
+    await userKeysController.verifyMessage(req, res);
+  }, next);
 });
 
 router.use((err, req, res, next) => {
