@@ -11,7 +11,9 @@ const container = new Container(logger);
 const controllerFactory = container.getControllerFactory();
 
 router.use(bodyParser.urlencoded({ extended: false }));
-router.use(bodyParser.json());
+
+//limit request size to 10kb. If it goes beyond this we will return an InternalServerError.
+router.use(bodyParser.json({ limit: '10kb' }));
 
 router.post('/register', (req, res, next) => {
   safeExecute(async () => {
@@ -34,8 +36,14 @@ router.post('/verify', (req, res, next) => {
   }, next);
 });
 
+//handle errors and return an appropriate message
 router.use((err, req, res, next) => {
   logger.log('%s. Stack: %s', err, err.stack);
+
+  //UserError represents an Error that was caused due to a user doing something wrong.
+  //The message for this error is meant to be returned as a friendly user error message.
+  //Any other type of error should be caught and return a 500-InternalServerError. 
+  //Under no circumstances should we show a stack trace in an API response. 
   if(err instanceof UserError){
     res.statusCode = 400;
     res.json({ error: err.message });
