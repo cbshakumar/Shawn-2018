@@ -22,6 +22,12 @@ class UserKeysController{
       return;
     };
 
+    /*A better way to do this is to issue user specific tokens which are validated
+    * instead of passing user/password to each request. 
+    * For the sake of implementation time, I went with a simple approach.
+    * Token based authentication is faster(simple verification instead of running through password hashing to compare)
+    * and a bit more secure(tokens can be short lived).
+    */
     let isValidUser = await this._userStorage.validate(req.body.user, req.body.password);
     if(!isValidUser){
       res.statusCode = 401;
@@ -29,7 +35,9 @@ class UserKeysController{
       return;
     }
 
+    //if we have an existing user, just update his existing publicKey
     this._userKeysStorage.upsert(req.body.user, req.body.publicKey);
+
     res.statusCode = 200;
     res.json({ status: 'success' });
   }
@@ -43,6 +51,7 @@ class UserKeysController{
     };
 
     let valid = this._userKeysStorage.verifyMessage(req.body.user, req.body.signature, req.body.message);
+
     res.statusCode = 200;
     res.json({ valid: valid });
   }
